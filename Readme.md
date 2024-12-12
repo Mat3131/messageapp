@@ -1,79 +1,42 @@
-# `@socket.io/component-emitter`
 
-  Event emitter component.
+# cookie-signature
 
-This project is a fork of the [`component-emitter`](https://github.com/sindresorhus/component-emitter) project, with [Socket.IO](https://socket.io/)-specific TypeScript typings.
+  Sign and unsign cookies.
 
-## Installation
-
-```
-$ npm i @socket.io/component-emitter
-```
-
-## API
-
-### Emitter(obj)
-
-  The `Emitter` may also be used as a mixin. For example
-  a "plain" object may become an emitter, or you may
-  extend an existing prototype.
-
-  As an `Emitter` instance:
+## Example
 
 ```js
-import { Emitter } from '@socket.io/component-emitter';
+var cookie = require('cookie-signature');
 
-var emitter = new Emitter;
-emitter.emit('something');
+var val = cookie.sign('hello', 'tobiiscool');
+val.should.equal('hello.DGDUkGlIkCzPz+C0B064FNgHdEjox7ch8tOBGslZ5QI');
+
+var val = cookie.sign('hello', 'tobiiscool');
+cookie.unsign(val, 'tobiiscool').should.equal('hello');
+cookie.unsign(val, 'luna').should.be.false;
 ```
 
-  As a mixin:
+## License 
 
-```js
-import { Emitter } from '@socket.io/component-emitter';
+(The MIT License)
 
-var user = { name: 'tobi' };
-Emitter(user);
+Copyright (c) 2012 LearnBoost &lt;tj@learnboost.com&gt;
 
-user.emit('im a user');
-```
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
 
-  As a prototype mixin:
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
 
-```js
-import { Emitter } from '@socket.io/component-emitter';
-
-Emitter(User.prototype);
-```
-
-### Emitter#on(event, fn)
-
-  Register an `event` handler `fn`.
-
-### Emitter#once(event, fn)
-
-  Register a single-shot `event` handler `fn`,
-  removed immediately after it is invoked the
-  first time.
-
-### Emitter#off(event, fn)
-
-  * Pass `event` and `fn` to remove a listener.
-  * Pass `event` to remove all listeners on that event.
-  * Pass nothing to remove all listeners on all events.
-
-### Emitter#emit(event, ...)
-
-  Emit an `event` with variable option args.
-
-### Emitter#listeners(event)
-
-  Return an array of callbacks, or an empty array.
-
-### Emitter#hasListeners(event)
-
-  Check if this emitter has `event` handlers.
-
-## License
-
-MIT
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

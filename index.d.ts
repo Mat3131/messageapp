@@ -1,12 +1,7 @@
-
-declare function defineDataProperty(
-    obj: Record<PropertyKey, unknown>,
-    property: keyof typeof obj,
-    value: typeof obj[typeof property],
-    nonEnumerable?: boolean | null,
-    nonWritable?: boolean | null,
-    nonConfigurable?: boolean | null,
-    loose?: boolean
-): void;
-
-export = defineDataProperty;
+import { Polling } from "./polling";
+import { WebSocket } from "./websocket";
+declare const _default: {
+    polling: typeof Polling;
+    websocket: typeof WebSocket;
+};
+export default _default;

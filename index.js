@@ -1,55 +1,90 @@
-'use strict';
+/*!
+ * forwarded
+ * Copyright(c) 2014-2017 Douglas Christopher Wilson
+ * MIT Licensed
+ */
 
-var $defineProperty = require('../');
+'use strict'
 
-var test = require('tape');
-var gOPD = require('gopd');
+/**
+ * Module exports.
+ * @public
+ */
 
-test('defineProperty: supported', { skip: !$defineProperty }, function (t) {
-	t.plan(4);
+module.exports = forwarded
 
-	t.equal(typeof $defineProperty, 'function', 'defineProperty is supported');
-	if ($defineProperty && gOPD) { // this `if` check is just to shut TS up
-		var o = { a: 1 };
+/**
+ * Get all addresses in the request, using the `X-Forwarded-For` header.
+ *
+ * @param {object} req
+ * @return {array}
+ * @public
+ */
 
-		$defineProperty(o, 'b', { enumerable: true, value: 2 });
-		t.deepEqual(
-			gOPD(o, 'b'),
-			{
-				configurable: false,
-				enumerable: true,
-				value: 2,
-				writable: false
-			},
-			'property descriptor is as expected'
-		);
+function forwarded (req) {
+  if (!req) {
+    throw new TypeError('argument req is required')
+  }
 
-		$defineProperty(o, 'c', { enumerable: false, value: 3, writable: true });
-		t.deepEqual(
-			gOPD(o, 'c'),
-			{
-				configurable: false,
-				enumerable: false,
-				value: 3,
-				writable: true
-			},
-			'property descriptor is as expected'
-		);
-	}
+  // simple header parsing
+  var proxyAddrs = parse(req.headers['x-forwarded-for'] || '')
+  var socketAddr = getSocketAddr(req)
+  var addrs = [socketAddr].concat(proxyAddrs)
 
-	t.equal($defineProperty, Object.defineProperty, 'defineProperty is Object.defineProperty');
+  // return all addresses
+  return addrs
+}
 
-	t.end();
-});
+/**
+ * Get the socket address for a request.
+ *
+ * @param {object} req
+ * @return {string}
+ * @private
+ */
 
-test('defineProperty: not supported', { skip: !!$defineProperty }, function (t) {
-	t.notOk($defineProperty, 'defineProperty is not supported');
+function getSocketAddr (req) {
+  return req.socket
+    ? req.socket.remoteAddress
+    : req.connection.remoteAddress
+}
 
-	t.match(
-		typeof $defineProperty,
-		/^(?:undefined|boolean)$/,
-		'`typeof defineProperty` is `undefined` or `boolean`'
-	);
+/**
+ * Parse the X-Forwarded-For header.
+ *
+ * @param {string} header
+ * @private
+ */
 
-	t.end();
-});
+function parse (header) {
+  var end = header.length
+  var list = []
+  var start = header.length
+
+  // gather addresses, backwards
+  for (var i = header.length - 1; i >= 0; i--) {
+    switch (header.charCodeAt(i)) {
+      case 0x20: /*   */
+        if (start === end) {
+          start = end = i
+        }
+        break
+      case 0x2c: /* , */
+        if (start !== end) {
+          list.push(header.substring(start, end))
+        }
+        start = end = i
+        break
+      default:
+        start = i
+        break
+    }
+  }
+
+  // final address
+  if (start !== end) {
+    list.push(header.substring(start, end))
+  }
+
+  return list
+}

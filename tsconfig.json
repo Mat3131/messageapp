@@ -5,7 +5,7 @@
 		/* Projects */
 
 		/* Language and Environment */
-		"target": "es2022",																	/* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+		"target": "es5",																	/* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
 		// "lib": [],																				/* Specify a set of bundled library declaration files that describe the target runtime environment. */
 		// "noLib": true,																		/* Disable including any library files, including the default lib.d.ts. */
 		"useDefineForClassFields": true,										 /* Emit ECMAScript-standard-compliant class fields. */
@@ -45,6 +45,5 @@
 	},
 	"exclude": [
 		"coverage",
-		"test/list-exports"
 	],
 }

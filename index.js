@@ -1,90 +1,35 @@
-/*!
- * forwarded
- * Copyright(c) 2014-2017 Douglas Christopher Wilson
- * MIT Licensed
- */
+'use strict';
 
-'use strict'
+var test = require('tape');
+var gOPD = require('../');
 
-/**
- * Module exports.
- * @public
- */
+test('gOPD', function (t) {
+	t.test('supported', { skip: !gOPD }, function (st) {
+		st.equal(typeof gOPD, 'function', 'is a function');
 
-module.exports = forwarded
+		var obj = { x: 1 };
+		st.ok('x' in obj, 'property exists');
 
-/**
- * Get all addresses in the request, using the `X-Forwarded-For` header.
- *
- * @param {object} req
- * @return {array}
- * @public
- */
+		var desc = gOPD(obj, 'x');
+		st.deepEqual(
+			desc,
+			{
+				configurable: true,
+				enumerable: true,
+				value: 1,
+				writable: true
+			},
+			'descriptor is as expected'
+		);
 
-function forwarded (req) {
-  if (!req) {
-    throw new TypeError('argument req is required')
-  }
+		st.end();
+	});
 
-  // simple header parsing
-  var proxyAddrs = parse(req.headers['x-forwarded-for'] || '')
-  var socketAddr = getSocketAddr(req)
-  var addrs = [socketAddr].concat(proxyAddrs)
+	t.test('not supported', { skip: gOPD }, function (st) {
+		st.notOk(gOPD, 'is falsy');
 
-  // return all addresses
-  return addrs
-}
+		st.end();
+	});
 
-/**
- * Get the socket address for a request.
- *
- * @param {object} req
- * @return {string}
- * @private
- */
-
-function getSocketAddr (req) {
-  return req.socket
-    ? req.socket.remoteAddress
-    : req.connection.remoteAddress
-}
-
-/**
- * Parse the X-Forwarded-For header.
- *
- * @param {string} header
- * @private
- */
-
-function parse (header) {
-  var end = header.length
-  var list = []
-  var start = header.length
-
-  // gather addresses, backwards
-  for (var i = header.length - 1; i >= 0; i--) {
-    switch (header.charCodeAt(i)) {
-      case 0x20: /*   */
-        if (start === end) {
-          start = end = i
-        }
-        break
-      case 0x2c: /* , */
-        if (start !== end) {
-          list.push(header.substring(start, end))
-        }
-        start = end = i
-        break
-      default:
-        start = i
-        break
-    }
-  }
-
-  // final address
-  if (start !== end) {
-    list.push(header.substring(start, end))
-  }
-
-  return list
-}
+	t.end();
+});

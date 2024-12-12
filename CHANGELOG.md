@@ -5,36 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v1.3.0](https://github.com/ljharb/es-errors/compare/v1.2.1...v1.3.0) - 2024-02-05
+## [v1.0.1](https://github.com/ljharb/gopd/compare/v1.0.0...v1.0.1) - 2022-11-01
 
 ### Commits
 
-- [New] add `EvalError` and `URIError` [`1927627`](https://github.com/ljharb/es-errors/commit/1927627ba68cb6c829d307231376c967db53acdf)
+- [Fix] actually export gOPD instead of dP [`4b624bf`](https://github.com/ljharb/gopd/commit/4b624bfbeff788c5e3ff16d9443a83627847234f)
 
-## [v1.2.1](https://github.com/ljharb/es-errors/compare/v1.2.0...v1.2.1) - 2024-02-04
-
-### Commits
-
-- [Fix] add missing `exports` entry [`5bb5f28`](https://github.com/ljharb/es-errors/commit/5bb5f280f98922701109d6ebb82eea2257cecc7e)
-
-## [v1.2.0](https://github.com/ljharb/es-errors/compare/v1.1.0...v1.2.0) - 2024-02-04
+## v1.0.0 - 2022-11-01
 
 ### Commits
 
-- [New] add `ReferenceError` [`6d8cf5b`](https://github.com/ljharb/es-errors/commit/6d8cf5bbb6f3f598d02cf6f30e468ba2caa8e143)
-
-## [v1.1.0](https://github.com/ljharb/es-errors/compare/v1.0.0...v1.1.0) - 2024-02-04
-
-### Commits
-
-- [New] add base Error [`2983ab6`](https://github.com/ljharb/es-errors/commit/2983ab65f7bc5441276cb021dc3aa03c78881698)
-
-## v1.0.0 - 2024-02-03
-
-### Commits
-
-- Initial implementation, tests, readme, type [`8f47631`](https://github.com/ljharb/es-errors/commit/8f476317e9ad76f40ad648081829b1a1a3a1288b)
-- Initial commit [`ea5d099`](https://github.com/ljharb/es-errors/commit/ea5d099ef18e550509ab9e2be000526afd81c385)
-- npm init [`6f5ebf9`](https://github.com/ljharb/es-errors/commit/6f5ebf9cead474dadd72b9e63dad315820a089ae)
-- Only apps should have lockfiles [`e1a0aeb`](https://github.com/ljharb/es-errors/commit/e1a0aeb7b80f5cfc56be54d6b2100e915d47def8)
-- [meta] add `sideEffects` flag [`a9c7d46`](https://github.com/ljharb/es-errors/commit/a9c7d460a492f1d8a241c836bc25a322a19cc043)
+- Initial implementation, tests, readme [`0911e01`](https://github.com/ljharb/gopd/commit/0911e012cd642092bd88b732c161c58bf4f20bea)
+- Initial commit [`b84e33f`](https://github.com/ljharb/gopd/commit/b84e33f5808a805ac57ff88d4247ad935569acbe)
+- [actions] add reusable workflows [`12ae28a`](https://github.com/ljharb/gopd/commit/12ae28ae5f50f86e750215b6e2188901646d0119)
+- npm init [`280118b`](https://github.com/ljharb/gopd/commit/280118badb45c80b4483836b5cb5315bddf6e582)
+- [meta] add `auto-changelog` [`bb78de5`](https://github.com/ljharb/gopd/commit/bb78de5639a180747fb290c28912beaaf1615709)
+- [meta] create FUNDING.yml; add `funding` in package.json [`11c22e6`](https://github.com/ljharb/gopd/commit/11c22e6355bb01f24e7fac4c9bb3055eb5b25002)
+- [meta] use `npmignore` to autogenerate an npmignore file [`4f4537a`](https://github.com/ljharb/gopd/commit/4f4537a843b39f698c52f072845092e6fca345bb)
+- Only apps should have lockfiles [`c567022`](https://github.com/ljharb/gopd/commit/c567022a18573aa7951cf5399445d9840e23e98b)
